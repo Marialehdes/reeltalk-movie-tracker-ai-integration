@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReelTalk Movie Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-badge">🎬</div>
+    <h1 class="header-title"><span class="title-reel">Reel</span><span class="title-talk">Talk</span></h1>
+    <p class="tagline">Track &bull; Rate &bull; Review Movies</p>
+  </div>
+</header>
+
+<section class="intro">
+<h2>Your Personal Movie Library</h2>
+
+<p>
+ReelTalk helps you keep track of the movies you watch. 
+Browse films, mark them as watched, save your favorites, 
+and share your opinions through ratings and reviews.
+</p>
+
+<p class="coming">
+Coming Soon: Browse movies, rate them, write reviews, and filter by genre.
+</p>
+
+<section id="stats">
+  <h2 class="stats-heading">Your Stats</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-icon">🎬</span>
+      <span class="stat-value" id="watched-count">0</span>
+      <span class="stat-label">Watched</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">❤️</span>
+      <span class="stat-value" id="favorites-count">0</span>
+      <span class="stat-label">Favorites</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">⭐</span>
+      <span class="stat-value" id="average-rating">—</span>
+      <span class="stat-label">Avg Rating</span>
+    </div>
+  </div>
+</section>
+
+<h2>Movie Collection</h2>
+
+<div id="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="watched">Watched</button>
+  <button class="filter-btn" data-filter="favorites">Favorites</button>
+  <button id="btn-reset-filters" class="btn-reset" aria-label="Reset all filters">✕ Reset</button>
+</div>
+
+<div id="genre-bar"></div>
+
+<div id="movie-list"></div>
+
+</section>
+
+<section class="enhancer-section">
+  <div class="enhancer-inner">
+
+    <div class="enhancer-header">
+      <span class="enhancer-icon">✨</span>
+      <div>
+        <h2 class="enhancer-title">AI Review Enhancer</h2>
+        <p class="enhancer-subtitle">Write a rough take — get back something polished.</p>
+      </div>
+    </div>
+
+    <textarea
+      id="raw-review"
+      class="enhancer-textarea"
+      rows="5"
+      placeholder="e.g. this movie was great, loved the acting but the ending felt kinda slow and rushed…"
+    ></textarea>
+
+    <div class="tone-row">
+      <label class="tone-label" for="tone-select">Tone</label>
+      <select id="tone-select" class="tone-select">
+        <option value="professional">Professional</option>
+        <option value="casual">Casual</option>
+        <option value="funny">Funny</option>
+        <option value="dramatic">Dramatic</option>
+      </select>
+    </div>
+
+    <div class="enhancer-actions">
+      <button id="enhance-btn" class="btn-enhance">✨ Enhance Review</button>
+      <button id="clear-btn" class="btn-clear">Clear</button>
+    </div>
+
+    <div id="enhance-output" class="enhance-output" hidden>
+      <p class="enhance-output-label">Enhanced Review</p>
+      <p id="enhance-text" class="enhance-text"></p>
+    </div>
+
+    <p id="enhance-error" class="enhance-error" hidden></p>
+
+  </div>
+</section>
+
+<footer>
+<p>© 2026 ReelTalk</p>
+</footer>
+
+<script src="data/movies.js"></script>
+<script src="js/storage.js"></script>
+<script src="script.js"></script>
+<script src="js/enhancer.js"></script>
+
+</body>
+</html>
