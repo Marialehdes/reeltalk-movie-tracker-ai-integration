@@ -1,1 +1,7 @@
+For this assignment, I chose Option A: AI-Powered Feature and added an “AI Review Enhancer” to my movie rating website, Reel Talk. This feature lets users type a rough movie review and then uses AI to rewrite it into something more polished and engaging. I chose this option because it fit really well with my project and I wanted to learn how AI actually works inside a real application instead of just using it separately.
 
+One thing that surprised me was how much work goes into making an API actually function. At first, I thought it would just be sending text and getting a response back, but I learned that you need a backend server to handle everything properly. I originally tried using a cloud API, but dealing with API keys made it more complicated than I expected. Switching to Ollama made things a lot easier, and it was really interesting to see that I could run an AI model locally on my own computer.
+
+I also learned that prompts are really important. The AI doesn’t just automatically give the perfect answer, you have to guide it clearly. I had to adjust my prompt a few times to make sure it kept the same opinion and didn’t add new information. Adding the tone selection feature (like funny, dramatic, or professional) showed me how flexible AI can be depending on how you instruct it.
+
+If I had more time, I would improve the design more and maybe allow users to save their AI-generated reviews. Overall, I learned that working with APIs and AI takes time, testing, and research, but once everything works, it’s really powerful and worth it.
