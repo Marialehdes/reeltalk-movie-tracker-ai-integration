@@ -8,6 +8,7 @@
   const output      = document.getElementById("enhance-output");
   const outputText  = document.getElementById("enhance-text");
   const errorBox    = document.getElementById("enhance-error");
+  const loadingMsg  = document.getElementById("enhance-loading");
 
   clearBtn.addEventListener("click", () => {
     textarea.value         = "";
@@ -15,6 +16,7 @@
     outputText.textContent = "";
     errorBox.hidden        = true;
     errorBox.textContent   = "";
+    loadingMsg.hidden      = true;
   });
 
   btn.addEventListener("click", async () => {
@@ -22,8 +24,9 @@
     const tone   = toneSelect.value;
 
     // Clear any previous results
-    output.hidden    = true;
-    errorBox.hidden  = true;
+    output.hidden          = true;
+    errorBox.hidden        = true;
+    loadingMsg.hidden      = true;
     outputText.textContent = "";
     errorBox.textContent   = "";
 
@@ -34,8 +37,9 @@
     }
 
     // Loading state
-    btn.textContent = "Enhancing…";
-    btn.disabled    = true;
+    btn.textContent   = "Enhancing…";
+    btn.disabled      = true;
+    loadingMsg.hidden = false;
 
     try {
       const res = await fetch("http://localhost:3001/enhance-review", {
@@ -46,18 +50,19 @@
 
       const data = await res.json();
 
-      if (!res.ok || data.enhanced === "Error generating review.") {
-        throw new Error("Server error");
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Server error");
       }
 
       outputText.textContent = data.enhanced;
       output.hidden          = false;
-    } catch {
-      errorBox.textContent = "Something went wrong. Please try again in a moment.";
+    } catch (err) {
+      errorBox.textContent = err.message || "Something went wrong. Please try again in a moment.";
       errorBox.hidden      = false;
     } finally {
-      btn.textContent = "✨ Enhance Review";
-      btn.disabled    = false;
+      btn.textContent   = "✨ Enhance Review";
+      btn.disabled      = false;
+      loadingMsg.hidden = true;
     }
   });
 })();
