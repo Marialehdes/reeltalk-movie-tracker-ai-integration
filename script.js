@@ -118,7 +118,12 @@ function renderMovies(movieList) {
   container.innerHTML = "";
 
   if (movieList.length === 0) {
-    container.innerHTML = `<p class="empty-state">No movies match this filter.</p>`;
+    const p = document.createElement("p");
+    p.className = "empty-state";
+    p.textContent = searchQuery
+      ? `No movies found for "${searchQuery}"`
+      : "No movies match this filter.";
+    container.appendChild(p);
     return;
   }
 
@@ -135,10 +140,12 @@ const filters = {
 
 let activeFilter = "all";
 let activeGenre  = null;
+let searchQuery  = "";
 
 function render() {
   let result = filters[activeFilter](movies);
   if (activeGenre) result = result.filter((m) => m.genre === activeGenre);
+  if (searchQuery) result = result.filter((m) => m.title.toLowerCase().includes(searchQuery));
   renderMovies(result);
 }
 
@@ -164,6 +171,8 @@ function buildGenreBar() {
 function resetFilters() {
   activeFilter = "all";
   activeGenre  = null;
+  searchQuery  = "";
+  document.getElementById("search-input").value = "";
 
   document.querySelectorAll(".filter-btn").forEach((b) => {
     b.classList.toggle("active", b.dataset.filter === "all");
@@ -193,6 +202,11 @@ document.getElementById("genre-bar").addEventListener("click", (e) => {
   document.querySelectorAll(".genre-btn").forEach((b) => {
     b.classList.toggle("active", b === btn);
   });
+  render();
+});
+
+document.getElementById("search-input").addEventListener("input", (e) => {
+  searchQuery = e.target.value.trim().toLowerCase();
   render();
 });
 
