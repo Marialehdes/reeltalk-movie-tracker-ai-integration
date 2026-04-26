@@ -1,0 +1,740 @@
+╭─── Claude Code v2.1.108 ─────────────────────────────────────────────────────╮
+│                                   │ Tips for getting started                 │
+│        Welcome back Maria!        │ Run /init to create a CLAUDE.md file wi… │
+│                                   │ ──────────────────────────────────────── │
+│              ▐▛███▜▌              │ Recent activity                          │
+│             ▝▜█████▛▘             │ 1w ago  I have a React-based movie rati… │
+│               ▘▘ ▝▝               │ /resume for more                         │
+│                                   │                                          │
+│      Sonnet 4.6 · Claude Pro      │                                          │
+│   ~\reeltalk-movie-tracker-main   │                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+> Step 1 Prompt for Claude:                                                     
+  I want to improve my movie website project. You already have access to my     
+  full folder and codebase, so make direct edits where needed.                  
+  Task 1: Add a Search Bar (Movie Title Search)                                 
+  Add a search bar to the main UI (top of the page or above the movie list).    
+  Users should be able to type a movie title and filter the displayed movies in 
+   real time.                                                                   
+  The search must be:                                                           
+  Case-insensitive                                                              
+  Updating dynamically as the user types (no submit button required)            
+  If no movies match the search, display a message like:                        
+   “No movies found”                                                            
+  Make sure the search works with my existing rendering logic (do not rebuild   
+  everything from scratch unless necessary).                                    
+  Task 2: Add 10 Current Movies                                                 
+  Add 10 recent/popular movies (from around 2023–2025).                         
+  Use the SAME data structure already used in my project (do not change the     
+  schema).                                                                      
+  Each movie should include all required fields (title, image, etc.).           
+  Ensure:                                                                       
+  They display correctly in the UI                                              
+  They work with the search feature                                             
+  Constraints                                                                   
+  Keep code consistent with my current structure and style.                     
+  Do NOT break any existing functionality.                                      
+  Modify only what is necessary.                                                
+  Output Requirements                                                           
+  Show me the FULL updated code for every file you changed.                     
+  Clearly label each file.                                                      
+  Briefly explain what you added or modified.                                   
+                                                                                
+
+● Let me explore the project structure first.
+
+  Searched for 1 pattern, read 4 files (ctrl+o to expand)
+
+● Now I have a clear picture of the codebase. Here's my plan:
+
+  - data/movies.js — append 10 new movies (IDs 11–20, 2023–2025)
+  - index.html — add a search bar above #filter-bar
+  - script.js — wire up real-time case-insensitive search into render()
+  - style.css — add search bar styles
+
+● Update(data\movies.js)
+  ⎿  Added 60 lines
+       61      genre: "Thriller",
+       62      poster: `${TMDB_IMG}/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg`,
+       63    },
+       64 +  {                                                           
+       65 +    id: 11,                                                   
+       66 +    title: "Oppenheimer",                                     
+       67 +    genre: "Drama",                                           
+       68 +    poster: `${TMDB_IMG}/8Gxv8giaFIzmZDEmGCStMMoJLmU.jpg`,    
+       69 +  },                                                          
+       70 +  {                                                           
+       71 +    id: 12,                                                   
+       72 +    title: "Barbie",                                          
+       73 +    genre: "Comedy",                                          
+       74 +    poster: `${TMDB_IMG}/iuFNMS8vlbP9QBiTT9Jj5c6uCTL.jpg`,    
+       75 +  },                                                          
+       76 +  {                                                           
+       77 +    id: 13,                                                   
+       78 +    title: "Spider-Man: Across the Spider-Verse",             
+       79 +    genre: "Animation",                                       
+       80 +    poster: `${TMDB_IMG}/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg`,    
+       81 +  },                                                          
+       82 +  {                                                           
+       83 +    id: 14,                                                   
+       84 +    title: "Killers of the Flower Moon",                      
+       85 +    genre: "Crime",                                           
+       86 +    poster: `${TMDB_IMG}/dB6SIEBZNeFDPCZOWGW3cBiTBoP.jpg`,    
+       87 +  },                                                          
+       88 +  {                                                           
+       89 +    id: 15,                                                   
+       90 +    title: "Past Lives",                                      
+       91 +    genre: "Drama",                                           
+       92 +    poster: `${TMDB_IMG}/k3waqVXPBXOg3JCxPSdq7tehZGG.jpg`,    
+       93 +  },                                                          
+       94 +  {                                                           
+       95 +    id: 16,                                                   
+       96 +    title: "Dune: Part Two",                                  
+       97 +    genre: "Sci-Fi",                                          
+       98 +    poster: `${TMDB_IMG}/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg`,    
+       99 +  },                                                          
+      100 +  {                                                           
+      101 +    id: 17,                                                   
+      102 +    title: "Inside Out 2",                                    
+      103 +    genre: "Animation",                                       
+      104 +    poster: `${TMDB_IMG}/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg`,    
+      105 +  },                                                          
+      106 +  {                                                           
+      107 +    id: 18,                                                   
+      108 +    title: "Deadpool & Wolverine",                            
+      109 +    genre: "Action",                                          
+      110 +    poster: `${TMDB_IMG}/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg`,    
+      111 +  },                                                          
+      112 +  {                                                           
+      113 +    id: 19,                                                   
+      114 +    title: "The Brutalist",                                   
+      115 +    genre: "Drama",                                           
+      116 +    poster: `${TMDB_IMG}/6mFDsORYDDoJvRY3KzAIxXr4GG3.jpg`,    
+      117 +  },                                                          
+      118 +  {                                                           
+      119 +    id: 20,                                                   
+      120 +    title: "Anora",                                           
+      121 +    genre: "Drama",                                           
+      122 +    poster: `${TMDB_IMG}/6HBFABfqJwLPRUDiQRAlqzgjVLg.jpg`,    
+      123 +  },                                                          
+      124  ];
+
+● Update(index.html)
+  ⎿  Added 10 lines
+      56  
+      57  <h2>Movie Collection</h2>
+      58  
+      59 +<div id="search-bar">                                          
+      60 +  <input                                                       
+      61 +    type="text"                                                
+      62 +    id="search-input"                                          
+      63 +    placeholder="Search movies..."                             
+      64 +    autocomplete="off"                                         
+      65 +    aria-label="Search movies by title"                        
+      66 +  >                                                            
+      67 +</div>                                                         
+      68 +                                                               
+      69  <div id="filter-bar">
+      70    <button class="filter-btn active" data-filter="all">All</butt
+          on>
+      71    <button class="filter-btn" data-filter="watched">Watched</but
+          ton>
+
+● Now update script.js to add the search state and wire it up:
+
+● Update(script.js)
+  ⎿  Added 2 lines
+      135  
+      136  let activeFilter = "all";
+      137  let activeGenre  = null;
+      138 +let searchQuery  = "";                                        
+      139  
+      140  function render() {
+      141    let result = filters[activeFilter](movies);
+      142    if (activeGenre) result = result.filter((m) => m.genre === a
+           ctiveGenre);
+      143 +  if (searchQuery) result = result.filter((m) => m.title.toLow
+          +erCase().includes(searchQuery));                              
+      144    renderMovies(result);
+      145  }
+      146  
+
+● Update(script.js)
+  ⎿  Added 6 lines, removed 1 line
+      118    container.innerHTML = "";
+      119  
+      120    if (movieList.length === 0) {
+      121 -    container.innerHTML = `<p class="empty-state">No movies ma
+          -tch this filter.</p>`;                                        
+      121 +    const p = document.createElement("p");                    
+      122 +    p.className = "empty-state";                              
+      123 +    p.textContent = searchQuery                               
+      124 +      ? `No movies found for "${searchQuery}"`                
+      125 +      : "No movies match this filter.";                       
+      126 +    container.appendChild(p);                                 
+      127      return;
+      128    }
+      129  
+
+● Update(script.js)
+  ⎿  Added 2 lines
+      171  function resetFilters() {
+      172    activeFilter = "all";
+      173    activeGenre  = null;
+      174 +  searchQuery  = "";                                          
+      175 +  document.getElementById("search-input").value = "";         
+      176  
+      177    document.querySelectorAll(".filter-btn").forEach((b) => {
+      178      b.classList.toggle("active", b.dataset.filter === "all");
+
+● Now add the search input event listener at the bottom of script.js:
+
+● Update(script.js)
+  ⎿  Added 5 lines
+      205    render();
+      206  });
+      207  
+      208 +document.getElementById("search-input").addEventListener("inpu
+          +t", (e) => {                                                  
+      209 +  searchQuery = e.target.value.trim().toLowerCase();          
+      210 +  render();                                                   
+      211 +});                                                           
+      212 +                                                              
+      213  buildGenreBar();
+      214  render();
+      215  updateStats();
+
+● Now add the search bar styles to CSS:
+
+● Update(style.css)
+  ⎿  Added 27 lines
+      176    letter-spacing: -0.3px;
+      177  }
+      178  
+      179 +/* ─── Search Bar ────────────────────────────────────────────
+          +─ */                                                          
+      180 +#search-bar {                                                 
+      181 +  margin-bottom: 0.75rem;                                     
+      182 +}                                                             
+      183 +                                                              
+      184 +#search-input {                                               
+      185 +  width: 100%;                                                
+      186 +  background: #13131f;                                        
+      187 +  border: 1px solid #2a2a4a;                                  
+      188 +  border-radius: 12px;                                        
+      189 +  color: #e8e8f0;                                             
+      190 +  font-family: inherit;                                       
+      191 +  font-size: 0.95rem;                                         
+      192 +  padding: 0.75rem 1.1rem;                                    
+      193 +  transition: border-color 0.15s, box-shadow 0.15s;           
+      194 +}                                                             
+      195 +                                                              
+      196 +#search-input:focus {                                         
+      197 +  outline: none;                                              
+      198 +  border-color: #e94560;                                      
+      199 +  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.12);              
+      200 +}                                                             
+      201 +                                                              
+      202 +#search-input::placeholder {                                  
+      203 +  color: #44445a;                                             
+      204 +}                                                             
+      205 +                                                              
+      206  /* ─── Filter Bars ───────────────────────────────────────────
+           ─ */
+      207  #filter-bar {
+      208    display: flex;
+
+● All four files are updated. Here's a summary of every change:
+
+  ---
+  data/movies.js
+
+  Added 10 movies (IDs 11–20) using the same { id, title, genre, poster } schema
+   with TMDB poster URLs:
+
+  ┌─────┬─────────────────────────────────────┬──────┬───────────┐
+  │  #  │                Title                │ Year │   Genre   │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 11  │ Oppenheimer                         │ 2023 │ Drama     │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 12  │ Barbie                              │ 2023 │ Comedy    │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 13  │ Spider-Man: Across the Spider-Verse │ 2023 │ Animation │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 14  │ Killers of the Flower Moon          │ 2023 │ Crime     │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 15  │ Past Lives                          │ 2023 │ Drama     │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 16  │ Dune: Part Two                      │ 2024 │ Sci-Fi    │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 17  │ Inside Out 2                        │ 2024 │ Animation │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 18  │ Deadpool & Wolverine                │ 2024 │ Action    │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 19  │ The Brutalist                       │ 2024 │ Drama     │
+  ├─────┼─────────────────────────────────────┼──────┼───────────┤
+  │ 20  │ Anora                               │ 2024 │ Drama     │
+  └─────┴─────────────────────────────────────┴──────┴───────────┘
+
+  ---
+  index.html
+
+  Added <div id="search-bar"> with an <input id="search-input"> directly above
+  #filter-bar.
+
+  ---
+  script.js
+
+  - Added let searchQuery = "" state variable
+  - render() now applies search filter after genre/watched/favorites filters —
+  case-insensitive via .toLowerCase().includes(searchQuery)
+  - renderMovies() empty-state message is contextual: No movies found for "..."
+  when searching, original text otherwise (avoids innerHTML injection by using
+  textContent)
+  - resetFilters() clears the search input and resets searchQuery
+  - New input event listener on #search-input updates searchQuery and re-renders
+   on every keystroke
+
+  ---
+  style.css
+
+  Added a #search-bar / #search-input block matching the existing dark theme —
+  same border radius, colors, and focus ring as the rest of the UI.
+
+✻ Baked for 1m 36s
+
+※ recap: Added a real-time search bar and 10 new 2023–2025 movies to the ReelTalk tracker. All changes are complete and ready to test in the browser. (disable recaps in /config)
+
+> Step 2 Prompt for Claude:                                                     
+                                                                                
+  Now improve the user experience when generating AI reviews.                   
+                                                                                
+  Task: Add a Loading Indicator for AI Reviews                                  
+  When the user triggers the AI review generation, immediately show a visible   
+  loading state.                                                                
+  Display the text:                                                             
+  “Generating review…”                                                          
+  This should remain visible while waiting for the AI response.                 
+  Once the response is received, remove the loading indicator and display the   
+  review.                                                                       
+  Requirements:                                                                 
+  Do NOT block the UI                                                           
+  Make sure the loading state is tied correctly to the async AI request         
+  Prevent duplicate requests while loading (disable button if needed)           
+  Keep everything consistent with my current structure                          
+  Output:                                                                       
+  Show full updated code for all modified files                                 
+  Brief explanation of how loading state is handled                             
+
+● Let me read the enhancer file before making any changes.
+
+  Read 1 file (ctrl+o to expand)
+
+● The enhancer already disables the button and changes its text, but there's no
+  visible loading indicator in the output area. I'll add a dedicated loading
+  element that shows in-place, consistent with the existing hidden/shown pattern
+   used for enhance-output and enhance-error.
+
+  Three files to touch: index.html (new element), js/enhancer.js (show/hide it),
+   style.css (styles + pulse animation).
+
+● Update(index.html)
+  ⎿  Added 2 lines
+      112        <button id="clear-btn" class="btn-clear">Clear</button>
+      113      </div>
+      114  
+      115 +    <p id="enhance-loading" class="enhance-loading" hidden>Gen
+          +erating review…</p>                                           
+      116 +                                                              
+      117      <div id="enhance-output" class="enhance-output" hidden>
+      118        <p class="enhance-output-label">Enhanced Review</p>
+      119        <p id="enhance-text" class="enhance-text"></p>
+
+● Update(js\enhancer.js)
+  ⎿  Added 1 line
+       8    const output      = document.getElementById("enhance-output")
+          ;
+       9    const outputText  = document.getElementById("enhance-text");
+      10    const errorBox    = document.getElementById("enhance-error");
+      11 +  const loadingMsg  = document.getElementById("enhance-loading"
+         +);                                                             
+      12  
+      13    clearBtn.addEventListener("click", () => {
+      14      textarea.value         = "";
+
+● Update(js\enhancer.js)
+  ⎿  Added 9 lines, removed 6 lines
+      23      const tone   = toneSelect.value;
+      24  
+      25      // Clear any previous results
+      26 -    output.hidden    = true;                                   
+      27 -    errorBox.hidden  = true;                                   
+      26 +    output.hidden          = true;                             
+      27 +    errorBox.hidden        = true;                             
+      28 +    loadingMsg.hidden      = true;                             
+      29      outputText.textContent = "";
+      30      errorBox.textContent   = "";
+      31  
+     ...
+      36      }
+      37  
+      38      // Loading state
+      38 -    btn.textContent = "Enhancing…";                            
+      39 -    btn.disabled    = true;                                    
+      39 +    btn.textContent   = "Enhancing…";                          
+      40 +    btn.disabled      = true;                                  
+      41 +    loadingMsg.hidden = false;                                 
+      42  
+      43      try {
+      44        const res = await fetch("http://localhost:3001/enhance-re
+          view", {
+     ...
+      59        errorBox.textContent = "Something went wrong. Please try 
+          again in a moment.";
+      60        errorBox.hidden      = false;
+      61      } finally {
+      60 -      btn.textContent = "✨ Enhance Review";                   
+      61 -      btn.disabled    = false;                                 
+      62 +      btn.textContent   = "✨ Enhance Review";                 
+      63 +      btn.disabled      = false;                               
+      64 +      loadingMsg.hidden = true;                                
+      65      }
+      66    });
+      67  })();
+
+● Now add the CSS styles with a pulse animation:
+● Update(style.css)
+  ⎿  Added 18 lines
+      756    background: #1a1a2e;
+      757  }
+      758  
+      759 +.enhance-loading {                                            
+      760 +  color: #9999dd;                                             
+      761 +  font-size: 0.88rem;                                         
+      762 +  font-weight: 600;                                           
+      763 +  background: #13131f;                                        
+      764 +  border: 1px solid #2a2a4a;                                  
+      765 +  border-left: 3px solid #7777aa;                             
+      766 +  border-radius: 12px;                                        
+      767 +  padding: 1rem 1.25rem;                                      
+      768 +  margin: 0;                                                  
+      769 +  animation: enhancer-pulse 1.4s ease-in-out infinite;        
+      770 +}                                                             
+      771 +                                                              
+      772 +@keyframes enhancer-pulse {                                   
+      773 +  0%, 100% { opacity: 1; }                                    
+      774 +  50%       { opacity: 0.45; }                                
+      775 +}                                                             
+      776 +                                                              
+      777  .enhance-output {
+      778    background: #13131f;
+      779    border: 1px solid #2a2a4a;
+
+● Also clear the loading message when the Clear button is pressed:
+
+● Update(js\enhancer.js)
+  ⎿  Added 1 line
+      16      outputText.textContent = "";
+      17      errorBox.hidden        = true;
+      18      errorBox.textContent   = "";
+      19 +    loadingMsg.hidden      = true;                             
+      20    });
+      21  
+      22    btn.addEventListener("click", async () => {
+
+● Let me verify the final state of enhancer.js looks clean:
+
+  Read 1 file (ctrl+o to expand)
+
+● All good. Here's a summary of every change:
+
+  ---
+  index.html
+
+  Added <p id="enhance-loading" hidden>Generating review…</p> directly above the
+   #enhance-output div. It starts hidden and is toggled purely via the hidden
+  attribute — same pattern as the existing output and error boxes.
+
+  ---
+  js/enhancer.js
+
+  - Added loadingMsg reference alongside the other element refs
+  - On click: loadingMsg.hidden = false is set immediately after validation
+  passes (same line as btn.disabled = true)
+  - In finally: loadingMsg.hidden = true — fires whether the request succeeds or
+   fails, so it always clears
+  - On clear: also hides it in case the user clicks Clear while a request is in
+  flight
+  - The button is disabled for the full duration of the request, preventing
+  duplicate submissions
+
+  ---
+  style.css
+
+  Added .enhance-loading styles that match the existing dark theme (same #13131f
+   background, same border radius as .enhance-output), with a purple left accent
+   to visually distinguish it from the green result box. A @keyframes 
+  enhancer-pulse opacity animation (1.4s, 1→0.45→1) gives a subtle breathing
+  effect without any layout shift or spinner DOM complexity.
+
+✻ Sautéed for 51s
+
+※ recap: Added search bar with real-time filtering and 10 new 2023–2025 movies, then improved the AI review enhancer with a visible pulsing loading indicator. Next: continue with Step 3 of your planned improvements. (disable recaps in /config)
+
+> I’m using Ollama in my project, but it’s not working correctly. You already   
+  have access to my full codebase.                                              
+                                                                                
+  Task: Debug why Ollama is not working                                         
+                                                                                
+  Please:                                                                       
+                                                                                
+  Find where my project is calling Ollama                                       
+  Check if the request URL, port, and endpoint are correct                      
+  Verify that the request format matches what Ollama expects                    
+  Check for any frontend/backend issues (CORS, async handling, etc.)            
+  Things to specifically look for:                                              
+  Am I calling http://localhost:11434 correctly?                                
+  Is the model name valid and available?                                        
+  Am I using the correct HTTP method and body format?                           
+  Are there any obvious errors in my fetch/axios request?                       
+  Could this be a CORS or network issue?                                        
+  Output:                                                                       
+  Explain clearly what is wrong                                                 
+  Show the fixed code                                                           
+  Tell me how to test if it’s working                                           
+
+  Read 1 file (ctrl+o to expand)
+
+● The code structure is correct (right URL, port, endpoint, body format), but I
+  found three real bugs that are all hiding from each other:
+
+  1. All errors collapse to the same opaque string — "Error generating review."
+  — so you can never tell if Ollama isn't running, the model is missing, or the
+  response was malformed
+  2. No request timeout — if Ollama is slow or loading the model, the request
+  hangs indefinitely with no recovery
+  3. ECONNREFUSED is silently swallowed — you never know whether to run ollama 
+  serve vs ollama pull
+
+  Let me fix all three.
+
+● Update(server.js)
+  ⎿  Added 31 lines, removed 9 lines
+       98            // 4. Safely parse Ollama's response
+       99            //    The generated text lives in the "response" fie
+           ld
+      100            try {
+      101 -            const parsed   = JSON.parse(data);                
+      102 -            const enhanced = parsed?.response;                
+      101 +            const parsed = JSON.parse(data);                  
+      102  
+      103 +            // Ollama signals failures (e.g. model not found) 
+          +with a non-200                                                
+      104 +            // status and an "error" string in the body.      
+      105 +            if (ollamaRes.statusCode !== 200) {               
+      106 +              const msg = parsed?.error || `Ollama returned st
+          +atus ${ollamaRes.statusCode}`;                                
+      107 +              console.error("Ollama error:", msg);            
+      108 +              send(res, 502, { error: msg });                 
+      109 +              return;                                         
+      110 +            }                                                 
+      111 +                                                              
+      112 +            const enhanced = parsed?.response;                
+      113              if (typeof enhanced !== "string" || !enhanced.trim
+           ()) {
+      105 -              throw new Error("Unexpected response shape");   
+      114 +              throw new Error("Unexpected response shape from 
+          +Ollama");                                                     
+      115              }
+      116  
+      117              send(res, 200, { enhanced: enhanced.trim() });
+      109 -          } catch {                                           
+      110 -            send(res, 500, { enhanced: "Error generating revie
+          -w." });                                                       
+      118 +          } catch (err) {                                     
+      119 +            console.error("Failed to parse Ollama response:", 
+          +err.message);                                                 
+      120 +            send(res, 500, { error: "Failed to parse Ollama re
+          +sponse." });                                                  
+      121            }
+      122          });
+      123        });
+      124  
+      115 -      // 5. Handle network-level errors — server will not cras
+          -h                                                             
+      116 -      //    (e.g. Ollama is not running)                      
+      117 -      ollamaReq.on("error", () => {                           
+      118 -        send(res, 500, { enhanced: "Error generating review." 
+          -});                                                           
+      125 +      // 5. Hard timeout — prevents the request hanging if Oll
+          +ama is busy                                                   
+      126 +      //    loading the model or the machine is under heavy lo
+          +ad.                                                           
+      127 +      ollamaReq.setTimeout(30000, () => {                     
+      128 +        ollamaReq.destroy();                                  
+      129 +        send(res, 504, { error: "Ollama timed out. The model m
+          +ay still be loading — try again in a moment." });             
+      130        });
+      131  
+      132 +      // 6. Handle network-level errors — server will not cras
+          +h.                                                            
+      133 +      //    Distinguish "Ollama is not running" from other fai
+          +lures so the                                                  
+      134 +      //    frontend can show an actionable message.          
+      135 +      ollamaReq.on("error", (err) => {                        
+      136 +        console.error("Ollama connection error:", err.message)
+          +;                                                             
+      137 +        const msg = err.code === "ECONNREFUSED"               
+      138 +          ? "Cannot connect to Ollama. Make sure it is running
+          +: `ollama serve`"                                             
+      139 +          : "Failed to reach Ollama: " + err.message;         
+      140 +        send(res, 502, { error: msg });                       
+      141 +      });                                                     
+      142 +                                                              
+      143        ollamaReq.write(payload);
+      144        ollamaReq.end();
+      145      });
+
+● Now update the frontend to read and display the real error message instead of
+  always showing a generic string:
+
+● Update(js\enhancer.js)
+  ⎿  Added 4 lines, removed 4 lines
+      50  
+      51        const data = await res.json();
+      52  
+      53 -      if (!res.ok || data.enhanced === "Error generating review
+         -.") {                                                          
+      54 -        throw new Error("Server error");                       
+      53 +      if (!res.ok || data.error) {                             
+      54 +        throw new Error(data.error || "Server error");         
+      55        }
+      56  
+      57        outputText.textContent = data.enhanced;
+      58        output.hidden          = false;
+      59 -    } catch {                                                  
+      60 -      errorBox.textContent = "Something went wrong. Please try 
+         -again in a moment.";                                           
+      59 +    } catch (err) {                                            
+      60 +      errorBox.textContent = err.message || "Something went wro
+         +ng. Please try again in a moment.";                            
+      61        errorBox.hidden      = false;
+      62      } finally {
+      63        btn.textContent   = "✨ Enhance Review";
+
+● Let me verify both files look clean end-to-end:
+
+  Read 1 file (ctrl+o to expand)
+
+● All good. Here's the full diagnosis and what was changed:
+
+  ---
+  What was wrong
+
+  Bug 1 — All errors looked identical (root cause of "not working")
+
+  Every failure path — Ollama not running, wrong model name, malformed response
+  — returned the exact same string "Error generating review.". The frontend
+  matched on that string and showed a generic message. You had zero visibility
+  into the actual problem.
+
+  Fixed: The server now returns { error: "..." } with the real message. The
+  frontend reads data.error and displays it directly in the red error box.
+  You'll now see things like:
+  - Cannot connect to Ollama. Make sure it is running: ollama serve
+  - model 'gemma:2b' not found, try pulling it first ← this is the likely cause
+  of your problem
+
+  Bug 2 — No timeout
+
+  http.request has no default timeout. If Ollama is slow to load the model, the
+  request hung forever with no recovery path.
+
+  Fixed: ollamaReq.setTimeout(30000) — after 30 s the request is destroyed and a
+   504 with a clear message is returned.
+
+  Bug 3 — Ollama's non-200 status was ignored
+
+  When Ollama returns a 404 (model not found) or 500, it sends { "error": "..." 
+  } in the body. The old code tried to read parsed.response on that object, got
+  undefined, threw "Unexpected response shape", and swallowed the real message.
+
+  Fixed: ollamaRes.statusCode !== 200 is checked first, and the actual
+  parsed.error string is forwarded.
+
+  ---
+  How to test it's working
+
+  Step 1 — Check what models you have:
+  ollama list
+
+  Step 2 — If gemma:2b is not listed, either pull it or use a model you already 
+  have:
+  ollama pull gemma:2b
+  # or use whatever model is listed, e.g. change "gemma:2b" → "llama3.2" in 
+  server.js line 77
+
+  Step 3 — Make sure Ollama is running:
+  ollama serve
+
+  Step 4 — Start your server in a separate terminal:
+  node server.js
+
+  Step 5 — Test the endpoint directly before touching the UI:
+  curl -X POST http://localhost:3001/enhance-review \
+    -H "Content-Type: application/json" \
+    -d "{\"review\":\"great movie\",\"tone\":\"professional\"}"
+  A working response looks like {"enhanced":"..."}. An error now looks like
+  {"error":"model 'gemma:2b' not found..."} — actionable instead of silent.
+
+✻ Baked for 1m 30s
+
+※ recap: Working on ReelTalk, a movie tracker website. Just debugged the Ollama AI review enhancer — errors are now visible in the UI. Next: run ollama list and node server.js, then test the enhance button. (disable recaps in /config)
+
+> I changed it to llama3 on the server.js but now on the webpage it says "      
+  Failed to fetch"                                                              
+
+● "Failed to fetch" is a browser-level network error — it means the fetch() call
+   never got a response at all. That always means one thing: the Node.js server 
+  at localhost:3001 isn't running (or crashed on startup).
+
+  Let me check the current state of server.js to confirm the edit looks right:
+
+  Read 1 file (ctrl+o to expand)
+
+● The code edit is fine. The problem is the server process itself isn't running.
+   Here's exactly what to do:
+
+  Open a terminal in your project folder and run:
+  node server.js
+
+  You should see:
+  ReelTalk AI server running → http://localhost:3001
+  Requests will be forwarded to Ollama at http://localhost:11434
+
+  Also make sure Ollama is running in a separate terminal:
+  ollama serve
+
+  ---
+  Why "Failed to fetch" specifically?
+
+  The browser's fetch() throws a TypeError: Failed to fetch when the TCP
+  connection is refused outright — i.e. nothing is listening on that port. Our
+  catch (err) block picks it up and shows err.message directly, which is the
+  browser's raw error string. It's not a server error — the server was never
+  reached.
+
+  Two processes need to be running at the same time:
+
+  ┌──────────┬────────────────┬─────────────────────────────────┐
+  │ Terminal │    Command     │          What it does           │
+  ├──────────┼────────────────┼─────────────────────────────────┤
+  │ 1        │ ollama serve   │ Runs the AI model on port 11434 │
+  ├──────────┼────────────────┼─────────────────────────────────┤
+  │ 2        │ node server.js │ Runs your backend on port 3001  │
+  └──────────┴────────────────┴─────────────────────────────────┘
+
+  Then open index.html in the browser and it should work.
+
+※ recap: ReelTalk movie tracker improvements are in progress. The one next action is to open two terminals and run ollama serve and node server.js so the AI review enhancer can connect.
