@@ -15,8 +15,7 @@ For this assignment, I added an AI-powered feature called the **AI Review Enhanc
 ## 📸 Screenshots
 
 ### Movie Collection
-<!-- Add a screenshot of the movie grid here -->
-*Screenshot coming soon*
+![3 Movie Collection Images](img/movie-cards.png)
 
 ### Stats Dashboard
 <!-- Add a screenshot of the stats section here -->
