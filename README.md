@@ -18,12 +18,10 @@ For this assignment, I added an AI-powered feature called the **AI Review Enhanc
 ![3 Movie Collection Images](img/movie-cards.png)
 
 ### Stats Dashboard
-<!-- Add a screenshot of the stats section here -->
-*Screenshot coming soon*
+![Example of a Stats Dashboard](img/your-stats.png)
 
 ### AI Review Enhancer
-<!-- Add a screenshot of the AI enhancer section here -->
-*Screenshot coming soon*
+![Loading of a enhanced review](img/enhanced-review.png)
 
 ---
 
