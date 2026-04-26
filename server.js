@@ -74,7 +74,7 @@ const server = http.createServer((req, res) => {
       // 2. Build the Ollama request body
       //    stream: false → Ollama returns one complete JSON object instead of a stream
       const payload = JSON.stringify({
-        model:  "gemma:2b",
+        model:  "llama3",
         prompt: buildPrompt(review.trim(), tone),
         stream: false,
       });
@@ -98,24 +98,55 @@ const server = http.createServer((req, res) => {
           // 4. Safely parse Ollama's response
           //    The generated text lives in the "response" field
           try {
-            const parsed   = JSON.parse(data);
-            const enhanced = parsed?.response;
+            const parsed = JSON.parse(data);
 
+            // Ollama signals failures (e.g. model not found) with a non-200
+            // status and an "error" string in the body.
+            if (ollamaRes.statusCode !== 200) {
+              const msg = parsed?.error || `Ollama returned status ${ollamaRes.statusCode}`;
+              console.error("Ollama error:", msg);
+              send(res, 502, { error: msg });
+              return;
+            }
+
+            const enhanced = parsed?.response;
             if (typeof enhanced !== "string" || !enhanced.trim()) {
-              throw new Error("Unexpected response shape");
+              throw new Error("Unexpected response shape from Ollama");
             }
 
             send(res, 200, { enhanced: enhanced.trim() });
-          } catch {
-            send(res, 500, { enhanced: "Error generating review." });
+          } catch (err) {
+            console.error("Failed to parse Ollama response:", err.message);
+            send(res, 500, { error: "Failed to parse Ollama response." });
           }
         });
       });
 
-      // 5. Handle network-level errors — server will not crash
-      //    (e.g. Ollama is not running)
-      ollamaReq.on("error", () => {
-        send(res, 500, { enhanced: "Error generating review." });
+      // 5. Hard timeout — prevents the request hanging if Ollama is busy.
+      //    Guard with res.headersSent so the destroy() call below does not
+      //    trigger the error handler and attempt a second send().
+      ollamaReq.setTimeout(30000, () => {
+        ollamaReq.destroy();
+        if (!res.headersSent) {
+          send(res, 504, { error: "Ollama timed out. The model may still be loading — try again in a moment." });
+        }
+      });
+
+      // 6. Handle network-level errors — server will not crash.
+      //    res.headersSent guard covers the case where the timeout fired first
+      //    and destroy() subsequently emits an error event.
+      ollamaReq.on("error", (err) => {
+        console.error("Ollama connection error:", err.message);
+        if (res.headersSent) return;
+        let msg;
+        if (err.code === "ECONNREFUSED") {
+          msg = "Cannot connect to Ollama. Make sure it is running: `ollama serve`";
+        } else if (err.code === "ECONNRESET") {
+          msg = "Ollama closed the connection. The model may not be pulled — run: `ollama pull llama3`";
+        } else {
+          msg = "Failed to reach Ollama: " + err.message;
+        }
+        send(res, 502, { error: msg });
       });
 
       ollamaReq.write(payload);
